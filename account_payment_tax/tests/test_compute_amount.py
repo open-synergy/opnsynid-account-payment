@@ -56,32 +56,32 @@ class TestComputeAmount(TransactionCase):
         tax_id = self.obj_account_tax.create(dict(
             name="Percent tax",
             type='percent',
-            amount='0.1',
+            amount='-0.1',
         ))
 
         new.tax_ids = [(6, 0, [tax_id.id])]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
-        new.amount_currency = -500000
+        new.amount_currency = 500000
 
-        self.assertEqual(-500000, new.amount_tax_currency)
+        self.assertEqual(500000, new.amount_tax_currency)
 
-        self.assertEqual(-550000, new.amount_total_currency)
+        self.assertEqual(450000, new.amount_total_currency)
 
     def test_compute_case_4(self):
         new = self.obj_payment_line.new()
         tax_id = self.obj_account_tax.create(dict(
             name="Percent tax include price",
             type='percent',
-            amount='0.1',
+            amount='-0.1',
             price_include=True
         ))
 
         new.tax_ids = [(6, 0, [tax_id.id])]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
-        new.amount_currency = -50000
+        new.amount_currency = 50000
 
-        self.assertEqual(-45454.55, new.amount_tax_currency)
+        self.assertEqual(55555.56, new.amount_tax_currency)
 
-        self.assertEqual(-50000, new.amount_total_currency)
+        self.assertEqual(50000, new.amount_total_currency)
