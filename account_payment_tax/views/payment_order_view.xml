@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+    <!-- -*- coding: utf-8 -*-
+        Copyright 2017 OpenSynergy Indonesia
+        License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<openerp>
+    <data>
+
+        <record id="payment_order_form_view" model="ir.ui.view" >
+            <field name="name">Account Payment Tax Form</field>
+            <field name="model">payment.order</field>
+            <field name="inherit_id" ref="account_payment.view_payment_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='amount_currency']" position="after">
+                    <field name="tax_ids" widget="many2many_tags"/>
+                    <field name="amount_tax_currency"/>
+                    <field name="amount_total_currency"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/form//field[@name='amount_currency']" position="after">
+                    <field name="amount_tax_currency" />
+                    <field name="amount_total_currency"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/form//notebook" position="inside">
+                    <page string="Tax">
+                        <group col="4">
+                            <field name="tax_ids"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
