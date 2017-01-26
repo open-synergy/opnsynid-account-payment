@@ -4,11 +4,10 @@
 
 from lxml import etree
 
-from openerp import models, api, _
-from openerp.exceptions import except_orm
+from openerp import models, api
 
 
-class AccountPaymentPopulateStatement(models.Model):
+class AccountPaymentPopulateStatement(models.TransientModel):
     _inherit = 'account.payment.populate.statement'
 
     @api.model

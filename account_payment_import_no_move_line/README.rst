@@ -2,11 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=================================
-# TO DO
-=================================
+===================================
+Account Payment Import No Move Line
+===================================
 
-# TO DO
+This module was written to extend the functionality of bank statement 
+which allows users to import payment order that don't have move line.
 
 Installation
 ============
@@ -17,7 +18,7 @@ To install this module, you need to:
 2.  Add the path to this repository in your configuration (addons-path)
 3.  Update the module list
 4.  Go to menu *Setting -> Modules -> Local Modules*
-5.  Search For *# TO DO*
+5.  Search For *Account Payment Import No Move Line*
 6.  Install the module
 
 Bug Tracker
