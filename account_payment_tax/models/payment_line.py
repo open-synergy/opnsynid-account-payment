@@ -36,7 +36,7 @@ class PaymentLine(models.Model):
 
             curr = rec.currency
             rec.amount_tax_currency =\
-                curr.round(taxes_total)
+                curr.round(total)
             rec.amount_total_currency = taxes_total + total
 
     tax_ids = fields.Many2many(
@@ -48,13 +48,13 @@ class PaymentLine(models.Model):
     )
 
     amount_tax_currency = fields.Float(
-        string="Amount Untaxed",
+        string="Amount Tax",
         store=False,
         compute='_compute_amount'
     )
 
     amount_total_currency = fields.Float(
-        string="Total",
+        string="Amount Total",
         store=False,
         compute='_compute_amount'
     )
