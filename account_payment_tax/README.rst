@@ -20,6 +20,13 @@ To install this module, you need to:
 5.  Search For *Account Payment Tax*
 6.  Install the module
 
+
+Known Issues
+============
+
+* Additional fields layout still need to be adjust
+
+
 Bug Tracker
 ===========
 
