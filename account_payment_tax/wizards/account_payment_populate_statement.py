@@ -24,12 +24,8 @@ class AccountPaymentPopulateStatement(models.TransientModel):
 
         for line in line_ids:
             currency = statement.currency
-            if line.amount_total_currency:
-                amount = currency.round(
-                    line.amount_total_currency)
-            else:
-                amount = currency.round(
-                    line.amount_currency)
+            amount = currency.round(
+                line.amount_total_currency)
 
             st_line_vals = self._prepare_statement_line_vals(
                 line, amount, statement)
