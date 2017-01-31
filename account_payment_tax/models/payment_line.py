@@ -20,6 +20,7 @@ class PaymentLine(models.Model):
         taxes = []
         taxes_total = 0.0
         total = 0.0
+        amount_total = 0.0
         for rec in self:
             rec.amount_tax_currency = 0.0
             rec.amount_total_currency = 0.0
@@ -33,11 +34,14 @@ class PaymentLine(models.Model):
                     taxes_total += taxes['total']
                     for c in taxes['taxes']:
                         total += c.get('amount', 0.0)
-
+                amount_total =\
+                    (taxes_total + total)
+            else:
+                amount_total = rec.amount_currency
             curr = rec.currency
             rec.amount_tax_currency =\
                 curr.round(total)
-            rec.amount_total_currency = taxes_total + total
+            rec.amount_total_currency = amount_total
 
     tax_ids = fields.Many2many(
         string="Taxes",
