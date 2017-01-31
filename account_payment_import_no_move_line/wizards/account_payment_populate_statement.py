@@ -16,7 +16,6 @@ class AccountPaymentPopulateStatement(models.TransientModel):
         res = super(AccountPaymentPopulateStatement, self).fields_view_get(
             view_id=view_id, view_type=view_type,
             toolbar=toolbar, submenu=submenu)
-        list_mode = []
         context = self.env.context
         obj_bank_statement = self.env['account.bank.statement']
         obj_payment_mode = self.env['payment.mode']
