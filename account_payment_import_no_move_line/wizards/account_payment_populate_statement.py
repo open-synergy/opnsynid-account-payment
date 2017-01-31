@@ -28,15 +28,11 @@ class AccountPaymentPopulateStatement(models.TransientModel):
         criteria = [
             ('journal', '=', bank_statement.journal_id.id)
         ]
-        mode_ids = obj_payment_mode.search(criteria)
-
-        if mode_ids:
-            for mode in mode_ids:
-                list_mode.append(mode.id)
+        mode = obj_payment_mode.search(criteria)
 
         criteria_line = [
             ('order_id.state', '=', 'open'),
-            ('order_id.mode', 'in', list_mode),
+            ('order_id.mode', 'in', mode.ids),
             ('bank_statement_line_id', '=', False),
             ('move_line_id', '=', False)
         ]
