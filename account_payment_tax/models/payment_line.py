@@ -16,7 +16,6 @@ class PaymentLine(models.Model):
         "currency"
     )
     def _compute_amount(self):
-        self.ensure_one()
         taxes = []
         taxes_total = 0.0
         total = 0.0
