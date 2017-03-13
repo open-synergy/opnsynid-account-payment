@@ -30,7 +30,7 @@ class PaymentLine(models.Model):
                         price_unit=price,
                         quantity=1.0,
                         partner=rec.partner_id)
-                    taxes_total += taxes['total']
+                    taxes_total = taxes['total']
                     for c in taxes['taxes']:
                         total += c.get('amount', 0.0)
                 amount_total =\
