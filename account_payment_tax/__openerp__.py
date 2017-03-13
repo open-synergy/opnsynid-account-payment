@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Account Payment Tax",
-    "version": "8.0.1.0.2",
+    "version": "8.0.2.0.2",
     "category": "Accounting",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",

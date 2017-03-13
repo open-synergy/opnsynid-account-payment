@@ -15,16 +15,34 @@ class TestComputeAmount(TransactionCase):
         # Data
         self.partner = self.env.ref("base.res_partner_1")
         self.curr = self.env.ref("base.IDR")
+        self.tax_positive = self._create_tax_positive()
+        self.tax_negative = self._create_tax_negative()
 
-    def test_compute_case_1(self):
-        new = self.obj_payment_line.new()
+    def _create_tax_positive(self):
         tax_id = self.obj_account_tax.create(dict(
-            name="Percent tax",
+            name="(Positive)Percent tax",
             type='percent',
             amount='0.1',
         ))
 
-        new.tax_ids = [(6, 0, [tax_id.id])]
+        return tax_id
+
+    def _create_tax_negative(self):
+        tax_id = self.obj_account_tax.create(dict(
+            name="(Negative)Percent tax",
+            type='percent',
+            amount='-0.1',
+        ))
+
+        return tax_id
+
+    def test_compute_case_1(self):
+        new = self.obj_payment_line.new()
+        new.tax_ids = [(
+            6, 0, [
+                self.tax_positive.id
+            ]
+        )]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
         new.amount_currency = 500000
@@ -53,13 +71,11 @@ class TestComputeAmount(TransactionCase):
 
     def test_compute_case_3(self):
         new = self.obj_payment_line.new()
-        tax_id = self.obj_account_tax.create(dict(
-            name="Percent tax",
-            type='percent',
-            amount='-0.1',
-        ))
-
-        new.tax_ids = [(6, 0, [tax_id.id])]
+        new.tax_ids = [(
+            6, 0, [
+                self.tax_negative.id
+            ]
+        )]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
         new.amount_currency = 500000
@@ -85,3 +101,19 @@ class TestComputeAmount(TransactionCase):
         self.assertEqual(-5555.56, new.amount_tax_currency)
 
         self.assertEqual(50000, new.amount_total_currency)
+
+    def test_compute_case_5(self):
+        new = self.obj_payment_line.new()
+        new.tax_ids = [(
+            6, 0, [
+                self.tax_positive.id,
+                self.tax_negative.id
+            ]
+        )]
+        new.partner_id = self.partner.id
+        new.currency = self.curr.id
+        new.amount_currency = 100000
+
+        self.assertEqual(0, new.amount_tax_currency)
+
+        self.assertEqual(100000, new.amount_total_currency)
