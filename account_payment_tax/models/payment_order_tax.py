@@ -136,19 +136,12 @@ class PaymentOrderTax(models.Model):
                     round=False
                 )
             account_id = payment_line.move_line_id.account_id.id
-            analytic_id = payment_line.move_line_id.analytic_account_id
             val['account_id'] =\
                 tax['account_collected_id'] or account_id
             val['account_analytic_id'] = tax['account_analytic_collected_id']
 
-            if (
-                not val.get('account_analytic_id') and
-                analytic_id and val['account_id'] == account_id
-            ):
-                val['account_analytic_id'] = account_id
-
             key = (val['tax_code_id'], val['base_code_id'], val['account_id'])
-            if not key in tax_grouped:
+            if key not in tax_grouped:
                 tax_grouped[key] = val
             else:
                 tax_grouped[key]['base'] += val['base']
