@@ -9,7 +9,7 @@
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": ["account_payment"],
     "data": [
         "views/payment_order_view.xml"
