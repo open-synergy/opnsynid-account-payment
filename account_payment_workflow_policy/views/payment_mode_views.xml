@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+    <!-- -*- coding: utf-8 -*-
+        Copyright 2019 OpenSynergy Indonesia
+        License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<openerp>
+<data>
+
+<record id="payment_mode_form_view" model="ir.ui.view" >
+    <field name="name">payment.mode form</field>
+    <field name="model">payment.mode</field>
+    <field name="inherit_id" ref="account_payment.view_payment_mode_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//group[1]" position="after">
+                <group name="group_1" colspan="4" col="2">
+                    <field name="payment_order_confirm_grp_ids" widget="many2many_tags"/>
+                    <field name="payment_order_make_grp_ids" widget="many2many_tags"/>
+                    <field name="payment_order_cancel_grp_ids" widget="many2many_tags"/>
+                    <field name="payment_order_restart_grp_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+</data>
+</openerp>
