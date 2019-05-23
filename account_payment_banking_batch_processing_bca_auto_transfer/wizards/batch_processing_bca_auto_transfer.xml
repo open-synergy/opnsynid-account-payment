@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="payment_batch_processing_bca_auto_transfer_view_form" model="ir.ui.view">
+    <field name="name">payment.batch_processing_bca_auto_transfer form</field>
+    <field name="model">payment.batch_processing_bca_auto_transfer</field>
+    <field name="inherit_id" ref="account_payment_banking_batch_processing.payment_batch_processing_view_form"/>
+    <field name="mode">primary</field>
+    <field name="arch" type="xml">
+        <data/>
+    </field>
+</record>
+
+<record id="payment_batch_processing_bca_auto_transfer_action" model="ir.actions.act_window">
+    <field name="name">BCA Auto-Transfer</field>
+    <field name="res_model">payment.batch_processing_bca_auto_transfer</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="payment_batch_processing_bca_auto_transfer_view_form"/>
+    <field name="target">new</field>
+</record>
+</data>
+</openerp>
