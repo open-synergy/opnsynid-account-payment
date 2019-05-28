@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_report_bca_auto_credit_4_all,payment.report_bca_auto_credit all,model_payment_report_bca_auto_credit,,1,0,0,0
