@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="payment_report_bca_auto_credit_view_tree" model="ir.ui.view">
+    <field name="name">payment.report_bca_auto_credit tree</field>
+    <field name="model">payment.report_bca_auto_credit</field>
+    <field name="arch" type="xml">
+        <tree create="false" edit="false" delete="false">
+            <field name="transac_date"/>
+            <field name="receiver_name"/>
+            <field name="acc_no_to"/>
+            <field name="bi_code"/>
+            <field name="bank_name"/>
+            <field name="bank_branch_name"/>
+            <field name="trans_amount"/>
+            <field name="jenis"/>
+            <field name="remark1"/>
+            <field name="remark2"/>
+            <field name="customer_type"/>
+            <field name="customer_residence"/>
+            <field name="order_id" invisible="1"/>
+        </tree>
+    </field>
+</record>
+
+<record id="payment_report_bca_auto_credit_action" model="ir.actions.act_window">
+    <field name="name">BCA Auto-Credit</field>
+    <field name="res_model">payment.report_bca_auto_credit</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree</field>
+</record>
+
+</data>
+</openerp>
