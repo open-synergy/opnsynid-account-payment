@@ -11,6 +11,7 @@ class TestPopulateStatement(TransactionCase):
         super(TestPopulateStatement, self).setUp(*args, **kwargs)
         # Objects
         self.obj_payment_order = self.env['payment.order']
+        self.obj_order_tax = self.env['payment.order.tax']
         self.obj_account_invoice = self.env['account.invoice']
         self.obj_account_invoice_line = self.env['account.invoice.line']
         self.obj_bank_statement = self.env['account.bank.statement']
@@ -21,8 +22,10 @@ class TestPopulateStatement(TransactionCase):
 
         # Data
         self.date = datetime.now().strftime("%Y-%m-%d")
+        self.analytic_acc = self.env.ref('account.analytic_in_house')
         self.product = self.env.ref('product.product_product_4')
         self.account = self.env.ref('account.a_recv')
+        self.acc_1 = self.env.ref('account.conf_ova')
         self.mode = self.env.ref('account_payment.payment_mode_1')
         self.partner = self.env.ref("base.res_partner_1")
         self.curr = self.env.ref("base.IDR")
@@ -49,7 +52,8 @@ class TestPopulateStatement(TransactionCase):
             'quantity': 1,
             'price_unit': 50000,
             'invoice_id': invoice_id.id,
-            'name': 'Test Invoice'
+            'name': 'Test Invoice',
+            'account_analytic_id': self.analytic_acc.id
         }
         self.obj_account_invoice_line.create(lines)
 
@@ -59,7 +63,7 @@ class TestPopulateStatement(TransactionCase):
         tax_id = self.obj_account_tax.create(dict(
             name="Percent tax",
             type='percent',
-            amount='0.1',
+            amount='0.1'
         ))
         return tax_id
 
@@ -147,6 +151,8 @@ class TestPopulateStatement(TransactionCase):
         line = self.payment_order.line_ids[0]
         line.tax_ids = [(6, 0, [self.tax.id])]
 
+        line.button_reset_taxes()
+
         wiz = self.wiz.with_context(active_id=bank_stmt.id)
         wiz.create({
             'lines': []
@@ -160,4 +166,11 @@ class TestPopulateStatement(TransactionCase):
         }).populate_statement()
 
         self.assertEqual(
-            -line.amount_total_currency, bank_stmt.line_ids.amount)
+            -55000, bank_stmt.line_ids.amount)
+
+        # Check Tax
+        criteria = [
+            ('payment_line_id', '=', line.id)
+        ]
+        tax = self.obj_order_tax.search(criteria)
+        self.assertEqual(5000, tax.amount)

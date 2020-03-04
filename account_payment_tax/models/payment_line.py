@@ -10,45 +10,14 @@ class PaymentLine(models.Model):
 
     @api.multi
     @api.depends(
-        "tax_ids",
         "amount_currency",
-        "partner_id",
-        "currency"
+        "tax_line.amount"
     )
     def _compute_amount(self):
-        taxes = []
-        taxes_total = 0.0
-        total = 0.0
-        amount_total = 0.0
         for rec in self:
-            rec.amount_tax_currency = 0.0
-            rec.amount_total_currency = 0.0
-            if rec.tax_ids:
-                price = rec.amount_currency
-                for tax in rec.tax_ids:
-                    taxes = tax.compute_all(
-                        price_unit=price,
-                        quantity=1.0,
-                        partner=rec.partner_id)
-                    taxes_total = taxes['total']
-                    for c in taxes['taxes']:
-                        total += c.get('amount', 0.0)
-                amount_total =\
-                    (taxes_total + total)
-            else:
-                amount_total = rec.amount_currency
-            curr = rec.currency
-            rec.amount_tax_currency =\
-                curr.round(total)
-            rec.amount_total_currency = amount_total
-
-    tax_ids = fields.Many2many(
-        string="Taxes",
-        comodel_name='account.tax',
-        relation='payment_line_tax_rel',
-        column1='line_id',
-        column2='tax_id'
-    )
+            rec.amount_tax_currency = sum(line.amount for line in rec.tax_line)
+            rec.amount_total_currency =\
+                rec.amount_currency + rec.amount_tax_currency
 
     amount_tax_currency = fields.Float(
         string="Amount Tax",
@@ -61,3 +30,32 @@ class PaymentLine(models.Model):
         store=False,
         compute='_compute_amount'
     )
+
+    tax_ids = fields.Many2many(
+        string="Taxes",
+        comodel_name='account.tax',
+        relation='payment_line_tax_rel',
+        column1='line_id',
+        column2='tax_id'
+    )
+
+    tax_line = fields.One2many(
+        comodel_name='payment.order.tax',
+        inverse_name='payment_line_id',
+        string='Tax Lines',
+        readonly=True,
+        copy=True
+    )
+
+    @api.multi
+    def button_reset_taxes(self):
+        payment_order_tax = self.env['payment.order.tax']
+        for rec in self:
+            self._cr.execute(
+                "DELETE FROM payment_order_tax "
+                "WHERE payment_line_id=%s AND manual is False", (rec.id,)
+            )
+            self.invalidate_cache()
+            for tax in payment_order_tax.compute(rec).values():
+                payment_order_tax.create(tax)
+        return True
