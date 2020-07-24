@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+    <!-- Copyright 2020 OpenSynergy Indonesia
+         Copyright 2020 PT. Simetri Sinergi Indonesia
+         License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<openerp>
+<data>
+
+<record id="payment_order_form_view" model="ir.ui.view" >
+    <field name="name">payment.order.multiple.approval.form</field>
+    <field name="model">payment.order</field>
+    <field name="inherit_id" ref="account_payment.view_payment_order_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//header" position="after">
+                <field name="need_validation" invisible="1"/>
+                <field name="validated" invisible="1"/>
+                <field name="rejected" invisible="1"/>
+                <div class="alert alert-warning"
+                     attrs="{'invisible': ['|', '|', '|',
+                     ('validated', '=', True), ('state', 'not in', ['confirm']),
+                     ('rejected', '=', True), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-info-circle"/>This Payment needs to be
+                        validated.
+                        <button name="validate_tier"
+                            string="Validate"
+                            attrs="{'invisible': [('review_ids', '=', [])]}"
+                            type="object"
+                            class="oe_inline oe_button btn-success"
+                            icon="terp-check"/>
+                        <button name="reject_tier"
+                            string="Reject"
+                            type="object"
+                            class="btn-icon btn-danger"
+                            icon="terp-gtk-stop"/>
+                    </p>
+                </div>
+                <div class="alert alert-success"
+                     attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
+                </div>
+                <div class="alert alert-danger"
+                     attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirm']), ('review_ids', '=', [])]}"
+                     style="margin-bottom:0px;">
+                    <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
+                </div>
+            </xpath>
+
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirm,open" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//button[@name='open']" position="before">
+                <button name="request_validation"
+                    string="Request Validation"
+                    attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirm'])]}"
+                    type="object"/>
+                <button name="restart_validation"
+                    string="Restart Validation"
+                    attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['confirm'])]}"
+                    type="object"/>
+                <button name="button_confirm" states="draft" string="Confirm" class="oe_highlight"/>
+            </xpath>
+
+            <xpath expr="//button[@name='open']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='cancel']" position="attributes">
+                <attribute name="states">draft,confirm,open</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='line_ids']" position="after">
+                <group name="grp_tier_validation" colspan="4" col="2" groups="base.group_system">
+                    <group name="grp_tier_validation_1">
+                        <separator string="Tier Validation" colspan="4"/>
+                        <field name="definition_id"/>
+                        <field name="reviewer_partner_ids" widget="many2many_tags"/>
+                        <field name="active_reviewer_ids" widget="many2many_tags"/>
+                        <field name="next_reviewer_ids" widget="many2many_tags"/>
+                        <field name="review_ids" readonly="1"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </data>
+
+    </field>
+</record>
+
+<record id="payment_order_view_search" model="ir.ui.view">
+    <field name="name">payment.order.multiple.approval.search</field>
+    <field name="model">payment.order</field>
+    <field name="inherit_id" ref="account_payment.view_payment_order_search"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='mode']" position="before">
+            <filter name="needs_review" string="Needs my Review"
+                    domain="[('reviewer_ids','in',uid), ('state', 'not in', ['approved', 'rejected'])]"
+                    help="My Payment to review"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
