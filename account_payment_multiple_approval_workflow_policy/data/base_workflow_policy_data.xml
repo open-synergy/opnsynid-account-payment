@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="workflow_policy_payment_order_confirm_approval" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="account_payment_workflow_policy.workflow_policy_payment_order"/>
+    <field name="field_id" search="[('model_id.model','=','payment.order'),('name','=','confirm_approval_ok')]"/>
+    <field name="python_code">result = document.mode.payment_order_confim_approval_group_ids.ids</field>
+</record>
+<record id="workflow_policy_payment_order_restart_approval" model="base.workflow_policy_line">
+    <field name="workflow_id" ref="account_payment_workflow_policy.workflow_policy_payment_order"/>
+    <field name="field_id" search="[('model_id.model','=','payment.order'),('name','=','restart_approval_ok')]"/>
+    <field name="python_code">result = document.mode.payment_order_restart_approval_group_ids.ids</field>
+</record>
+
+</data>
+</openerp>
