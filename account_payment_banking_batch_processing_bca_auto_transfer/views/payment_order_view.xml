@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+        <record id="payment_order_view_form" model="ir.ui.view">
+            <field name="name">Account Payment Order Form</field>
+            <field name="model">payment.order</field>
+            <field name="inherit_id" ref="account_payment.view_payment_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="after">
+                    <group name="grp_bca_auto_transfer" colspan="4" col="2" groups="base.group_system">
+                        <separator string="BCA Auto Transfer Report" colspan="4"/>
+                        <field name="report_bca_auto_transfer_ids" nolabel="1"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
