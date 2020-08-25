@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<openerp>
+    <data>
+
+        <!-- Template -->
+        <record id="template_auto_credit" model="base.xlsx.template">
+            <field name="name">BCA Auto Credit</field>
+            <field name="model_id" ref="account_payment.model_payment_order"/>
+            <field name="file_name">report_bca_auto_credit.xlsx</field>
+            <field name="file" type="base64" file="account_payment_banking_batch_processing_bca_auto_credit/data/report_bca_auto_credit.xlsx"/>
+        </record>
+
+        <!-- Sheet -->
+        <record id="template_auto_credit_sheet" model="base.xlsx.template.sheet">
+            <field name="name">auto_credit</field>
+            <field name="template_id" ref="template_auto_credit"/>
+        </record>
+
+        <!-- Sheet Detail -->
+        <record id="template_auto_credit_sheet_detail" model="base.xlsx.template.sheet.detail">
+            <field name="field_name">report_bca_auto_credit_ids</field>
+            <field name="template_sheet_id" ref="template_auto_credit_sheet"/>
+        </record>
+
+        <!-- Sheet Detail Detail -->
+        <record id="template_auto_credit_sheet_detail_transac_date" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">A2</field>
+            <field name="field_name">transac_date</field>
+            <field name="field_cond">value or ''</field>
+            <field name="style">style=date[mm/dd/yyyy]</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_receiver_name" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">B2</field>
+            <field name="field_name">receiver_name</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_acc_no_to" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">C2</field>
+            <field name="field_name">acc_no_to</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_trans_amount" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">D2</field>
+            <field name="field_name">trans_amount</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_remark1" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">E2</field>
+            <field name="field_name">remark1</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_remark2" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">F2</field>
+            <field name="field_name">remark2</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_jenis" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">G2</field>
+            <field name="field_name">jenis</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_bi_code" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">H2</field>
+            <field name="field_name">bi_code</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_bank_name" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">I2</field>
+            <field name="field_name">bank_name</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_bank_branch_name" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">J2</field>
+            <field name="field_name">bank_branch_name</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_bank_customer_type" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">K2</field>
+            <field name="field_name">customer_type</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+        <record id="template_auto_credit_sheet_detail_bank_customer_residence" model="base.xlsx.template.sheet.detail.detail">
+            <field name="cell">L2</field>
+            <field name="field_name">customer_residence</field>
+            <field name="field_cond">value or ''</field>
+            <field name="template_sheet_detail_id" ref="template_auto_credit_sheet_detail"/>
+        </record>
+
+    </data>
+</openerp>
