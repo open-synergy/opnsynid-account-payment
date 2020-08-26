@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_payment_banking_batch_processing_4_employee,payment.banking_batch_processing employee,model_payment_banking_batch_processing,base.group_user,1,1,1,1
-access_payment_banking_batch_processing_4_all,payment.banking_batch_processing all,model_payment_banking_batch_processing,,1,0,0,0

@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
-# Copyright 2018 OpenSynergy Indonesia
+# Copyright 2019 OpenSynergy Indonesia
+# Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 from openerp import models, fields
 from openerp import tools
 
 
-class ReportBcaAutoTransfer(models.AbstractModel):
+class ReportBcaAutoTransfer(models.Model):
     _name = "payment.report_bca_auto_transfer"
     _description = "BCA Auto-Transfer Report"
     _auto = False
 
+    order_id = fields.Many2one(
+        string="# Order",
+        comodel_name="payment.order",
+    )
     trx_ref_no = fields.Char(
         string="Trx Ref",
     )
-    transac_date = fields.Char(
+    transac_date = fields.Date(
         string="Transac. Date",
     )
     acc_no_from = fields.Char(
@@ -23,7 +27,7 @@ class ReportBcaAutoTransfer(models.AbstractModel):
     acc_no_to = fields.Char(
         string="Acc. No. To.",
     )
-    trans_amount = fields.Char(
+    trans_amount = fields.Float(
         string="Trans. Amount"
     )
     remark1 = fields.Char(
@@ -49,10 +53,6 @@ class ReportBcaAutoTransfer(models.AbstractModel):
     )
     customer_residence = fields.Char(
         string="Customer Residence",
-    )
-    order_id = fields.Many2one(
-        string="# Order",
-        comodel_name="payment.order",
     )
 
     def _select(self):
