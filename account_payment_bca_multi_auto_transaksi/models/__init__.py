@@ -5,4 +5,5 @@
 
 from . import (
     payment_bca_multi_auto_transfer,
+    payment_order,
 )
