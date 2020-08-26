@@ -47,6 +47,10 @@ class PaymentBcaMultiAutoTransfer(models.AbstractModel):
     beneficiary_email = fields.Char(
         string="Beneficiary Email",
     )
+    order_id = fields.Many2one(
+        string="# Payment Order",
+        comodel_name="payment.order",
+    )
 
     def _select(self):
         select_str = """
@@ -69,7 +73,8 @@ class PaymentBcaMultiAutoTransfer(models.AbstractModel):
                     'OUR' AS charges_type,
                     d.acc_number AS charges_acc,
                     f.owner_name AS receiver_name,
-                    h.email AS beneficiary_email
+                    h.email AS beneficiary_email,
+                    b.id AS order_id
         """
         return select_str
 
