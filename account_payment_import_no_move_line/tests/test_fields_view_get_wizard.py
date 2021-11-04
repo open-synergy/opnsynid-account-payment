@@ -2,8 +2,9 @@
 # Copyright 2017 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .base import BaseTest
 from lxml import etree
+
+from .base import BaseTest
 
 
 class TestFieldsViewGet(BaseTest):
@@ -13,32 +14,28 @@ class TestFieldsViewGet(BaseTest):
         # Using New Data
 
         # Invoice: state = open
-        self.invoice.signal_workflow('invoice_open')
+        self.invoice.signal_workflow("invoice_open")
         # Payment Order: state = open
-        self.payment_order.signal_workflow('open')
+        self.payment_order.signal_workflow("open")
         # Create Payment
         move_line = self.invoice.move_id.line_id[0]
 
         create_payment = self.obj_create_payment.with_context(
-            active_model='payment.order',
-            active_id=self.payment_order.id
+            active_model="payment.order", active_id=self.payment_order.id
         )
-        create_payment.create({
-            'entries': [(6, 0, [move_line.id])]
-        }).create_payment()
+        create_payment.create({"entries": [(6, 0, [move_line.id])]}).create_payment()
 
         # Create Payment Without Entries
         # Using old data demo
         data_payment_lines = {
-            'order_id': self.data_payment.id,
-            'name': 'Test Payment Line - 1',
-            'partner_id': self.partner.id,
-            'communication': '-',
-            'amount_currency': 75000
+            "order_id": self.data_payment.id,
+            "name": "Test Payment Line - 1",
+            "partner_id": self.partner.id,
+            "communication": "-",
+            "amount_currency": 75000,
         }
-        data_payment_line =\
-            self.obj_payment_line.create(data_payment_lines)
-        self.data_payment.signal_workflow('open')
+        data_payment_line = self.obj_payment_line.create(data_payment_lines)
+        self.data_payment.signal_workflow("open")
 
         # GET LINE ID for Payment with Entries
         line_ids.append(self.payment_order.line_ids[0].id)
@@ -47,12 +44,12 @@ class TestFieldsViewGet(BaseTest):
 
         # Create Bank Statement
         vals = {
-            'name': 'Test Statement',
-            'journal_id': self.journal.id,
-            'date': self.date,
-            'balance_end_real': 0.0,
-            'balance_start': 0.0,
-            'currency': self.curr.id
+            "name": "Test Statement",
+            "journal_id": self.journal.id,
+            "date": self.date,
+            "balance_end_real": 0.0,
+            "balance_start": 0.0,
+            "currency": self.curr.id,
         }
         bank_stmt = self.obj_bank_statement.create(vals)
 
@@ -64,12 +61,9 @@ class TestFieldsViewGet(BaseTest):
         # Check Domain
         check_domain = [("id", "in", line_ids)]
 
-        if 'lines' in view['fields']:
-            arch = view['arch']
+        if "lines" in view["fields"]:
+            arch = view["arch"]
             doc = etree.XML(arch)
             for node in doc.xpath("//field[@name='lines']"):
-                domain = node.get('domain')
-                self.assertEquals(
-                    domain,
-                    str(check_domain)
-                )
+                domain = node.get("domain")
+                self.assertEqual(domain, str(check_domain))

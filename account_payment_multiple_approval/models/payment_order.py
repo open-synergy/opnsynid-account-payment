@@ -3,7 +3,7 @@
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class PaymentOrder(models.Model):
@@ -12,10 +12,7 @@ class PaymentOrder(models.Model):
         "payment.order",
         "tier.validation",
     ]
-    _state_from = [
-        "draft",
-        "confirm"
-    ]
+    _state_from = ["draft", "confirm"]
     _state_to = [
         "open",
     ]
@@ -24,7 +21,7 @@ class PaymentOrder(models.Model):
         ("draft", "Draft"),
         ("confirm", "Waiting for Approval"),
         ("cancel", "Cancelled"),
-        ("open", 'Open'),
+        ("open", "Open"),
         ("done", "Done"),
     ]
 

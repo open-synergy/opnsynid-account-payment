@@ -6,12 +6,10 @@
     "version": "8.0.1.0.0",
     "summary": "Add Open Chatter to Payment Order",
     "category": "Accounting & Finance",
-    "website": "https://opensynergy-indonesia.com",
-    "author": "OpenSynergy Indonesia",
+    "website": "https://simetri-sinergi.id",
+    "author": "OpenSynergy Indonesia, PT. Simetri Sinergi Indonesia",
     "license": "AGPL-3",
     "installable": True,
     "depends": ["account_payment"],
-    "data": [
-        "views/payment_order_view.xml"
-    ],
+    "data": ["views/payment_order_view.xml"],
 }
