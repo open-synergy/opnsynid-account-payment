@@ -1,23 +1,23 @@
-<?xml version="1.0"?>
-    <!-- -*- coding: utf-8 -*-
+<?xml version="1.0" ?>
+<!-- -*- coding: utf-8 -*-
         Copyright 2019 OpenSynergy Indonesia
         License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <openerp>
 <data>
 
-<record id="payment_order_form_view" model="ir.ui.view" >
+<record id="payment_order_form_view" model="ir.ui.view">
     <field name="name">payment.order form</field>
     <field name="model">payment.order</field>
-    <field name="inherit_id" ref="account_payment.view_payment_order_form"/>
+    <field name="inherit_id" ref="account_payment.view_payment_order_form" />
     <field name="arch" type="xml">
         <data>
             <xpath expr="//field[@name='line_ids']" position="after">
                 <group name="policy_1" colspan="4" col="2" groups="base.group_system">
-                    <separator string="Workflow Button Policy" colspan="4"/>
-                    <field name="confirm_ok"/>
-                    <field name="make_ok"/>
-                    <field name="cancel_ok"/>
-                    <field name="restart_ok"/>
+                    <separator string="Workflow Button Policy" colspan="4" />
+                    <field name="confirm_ok" />
+                    <field name="make_ok" />
+                    <field name="cancel_ok" />
+                    <field name="restart_ok" />
                 </group>
             </xpath>
 
@@ -25,32 +25,32 @@
                 <attribute name="attrs">
                     {'invisible':['|',('state','!=', 'draft'),('confirm_ok','=',False)]}
                 </attribute>
-                <attribute name="states"/>
-                <attribute name="groups"/>
+                <attribute name="states" />
+                <attribute name="groups" />
             </xpath>
 
             <xpath expr="//button[@name='set_done']" position="attributes">
                 <attribute name="attrs">
                     {'invisible':['|',('state','!=', 'open'),('make_ok','=',False)]}
                 </attribute>
-                <attribute name="states"/>
-                <attribute name="groups"/>
+                <attribute name="states" />
+                <attribute name="groups" />
             </xpath>
 
             <xpath expr="//button[@name='set_to_draft']" position="attributes">
                 <attribute name="attrs">
                     {'invisible':['|',('state','!=', 'cancel'),('restart_ok','=',False)]}
                 </attribute>
-                <attribute name="states"/>
-                <attribute name="groups"/>
+                <attribute name="states" />
+                <attribute name="groups" />
             </xpath>
 
             <xpath expr="//button[@name='cancel']" position="attributes">
                 <attribute name="attrs">
                     {'invisible':['|',('state','not in', ['draft','open']),('cancel_ok','=',False)]}
                 </attribute>
-                <attribute name="states"/>
-                <attribute name="groups"/>
+                <attribute name="states" />
+                <attribute name="groups" />
             </xpath>
         </data>
 

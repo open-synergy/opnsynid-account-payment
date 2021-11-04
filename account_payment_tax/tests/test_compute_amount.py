@@ -9,8 +9,8 @@ class TestComputeAmount(TransactionCase):
     def setUp(self, *args, **kwargs):
         super(TestComputeAmount, self).setUp(*args, **kwargs)
         # Objects
-        self.obj_payment_line = self.env['payment.line']
-        self.obj_account_tax = self.env['account.tax']
+        self.obj_payment_line = self.env["payment.line"]
+        self.obj_account_tax = self.env["account.tax"]
 
         # Data
         self.partner = self.env.ref("base.res_partner_1")
@@ -19,30 +19,30 @@ class TestComputeAmount(TransactionCase):
         self.tax_negative = self._create_tax_negative()
 
     def _create_tax_positive(self):
-        tax_id = self.obj_account_tax.create(dict(
-            name="(Positive)Percent tax",
-            type='percent',
-            amount='0.1',
-        ))
+        tax_id = self.obj_account_tax.create(
+            dict(
+                name="(Positive)Percent tax",
+                type="percent",
+                amount="0.1",
+            )
+        )
 
         return tax_id
 
     def _create_tax_negative(self):
-        tax_id = self.obj_account_tax.create(dict(
-            name="(Negative)Percent tax",
-            type='percent',
-            amount='-0.1',
-        ))
+        tax_id = self.obj_account_tax.create(
+            dict(
+                name="(Negative)Percent tax",
+                type="percent",
+                amount="-0.1",
+            )
+        )
 
         return tax_id
 
     def test_compute_case_1(self):
         new = self.obj_payment_line.new()
-        new.tax_ids = [(
-            6, 0, [
-                self.tax_positive.id
-            ]
-        )]
+        new.tax_ids = [(6, 0, [self.tax_positive.id])]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
         new.amount_currency = 500000
@@ -53,12 +53,14 @@ class TestComputeAmount(TransactionCase):
 
     def test_compute_case_2(self):
         new = self.obj_payment_line.new()
-        tax_id = self.obj_account_tax.create(dict(
-            name="Percent tax include price",
-            type='percent',
-            amount='0.1',
-            price_include=True
-        ))
+        tax_id = self.obj_account_tax.create(
+            dict(
+                name="Percent tax include price",
+                type="percent",
+                amount="0.1",
+                price_include=True,
+            )
+        )
 
         new.tax_ids = [(6, 0, [tax_id.id])]
         new.partner_id = self.partner.id
@@ -71,11 +73,7 @@ class TestComputeAmount(TransactionCase):
 
     def test_compute_case_3(self):
         new = self.obj_payment_line.new()
-        new.tax_ids = [(
-            6, 0, [
-                self.tax_negative.id
-            ]
-        )]
+        new.tax_ids = [(6, 0, [self.tax_negative.id])]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
         new.amount_currency = 500000
@@ -86,12 +84,14 @@ class TestComputeAmount(TransactionCase):
 
     def test_compute_case_4(self):
         new = self.obj_payment_line.new()
-        tax_id = self.obj_account_tax.create(dict(
-            name="Percent tax include price",
-            type='percent',
-            amount='-0.1',
-            price_include=True
-        ))
+        tax_id = self.obj_account_tax.create(
+            dict(
+                name="Percent tax include price",
+                type="percent",
+                amount="-0.1",
+                price_include=True,
+            )
+        )
 
         new.tax_ids = [(6, 0, [tax_id.id])]
         new.partner_id = self.partner.id
@@ -104,12 +104,7 @@ class TestComputeAmount(TransactionCase):
 
     def test_compute_case_5(self):
         new = self.obj_payment_line.new()
-        new.tax_ids = [(
-            6, 0, [
-                self.tax_positive.id,
-                self.tax_negative.id
-            ]
-        )]
+        new.tax_ids = [(6, 0, [self.tax_positive.id, self.tax_negative.id])]
         new.partner_id = self.partner.id
         new.currency = self.curr.id
         new.amount_currency = 100000

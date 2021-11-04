@@ -13,10 +13,10 @@ class BatchProcessingBcaAutoCredit(models.TransientModel):
     @api.multi
     def action_print_sreen(self):
         self.ensure_one()
-        xml = "account_payment_banking_batch_processing_bca_auto_credit." + \
-              "payment_report_bca_auto_credit_action"
+        xml = (
+            "account_payment_banking_batch_processing_bca_auto_credit."
+            + "payment_report_bca_auto_credit_action"
+        )
         report = self.env.ref(xml).read()[0]
-        report["domain"] = [
-            ("order_id", "=", self.order_id.id)
-        ]
+        report["domain"] = [("order_id", "=", self.order_id.id)]
         return report

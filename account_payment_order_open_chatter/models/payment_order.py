@@ -6,8 +6,5 @@ from openerp import models
 
 
 class PaymentOrder(models.Model):
-    _name = 'payment.order'
-    _inherit = [
-        'payment.order',
-        'mail.thread'
-    ]
+    _name = "payment.order"
+    _inherit = ["payment.order", "mail.thread"]

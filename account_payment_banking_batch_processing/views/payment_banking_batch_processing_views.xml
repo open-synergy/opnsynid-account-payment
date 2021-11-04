@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="payment_banking_batch_processing_view_tree" model="ir.ui.view">
@@ -9,9 +8,9 @@
     <field name="model">payment.banking_batch_processing</field>
     <field name="arch" type="xml">
         <tree create="true" edit="false" delete="true">
-            <field name="name"/>
-            <field name="bank_id"/>
-            <field name="action_id"/>
+            <field name="name" />
+            <field name="bank_id" />
+            <field name="action_id" />
         </tree>
     </field>
 </record>
@@ -22,22 +21,22 @@
     <field name="arch" type="xml">
         <form create="false" edit="true" delete="true">
             <group name="top" colspan="4" col="2">
-                <field name="name"/>
-                <field name="bank_id" required="1"/>
-                <field name="active"/>
+                <field name="name" />
+                <field name="bank_id" required="1" />
+                <field name="active" />
             </group>
             <notebook>
                 <page name="general" string="General Configuration">
                     <group name="general_1" colspan="4" col="2">
                         <group name="general_1_1" colspan="1" col="2">
-                            <field name="action_id"/>
+                            <field name="action_id" />
                         </group>
                         <group name="general_1_2" colspan="1" col="2">
                         </group>
                     </group>
                 </page>
                 <page name="note" string="Note">
-                    <field name="note" nolabel="1"/>
+                    <field name="note" nolabel="1" />
                 </page>
             </notebook>
         </form>
@@ -52,10 +51,11 @@
 </record>
 
 <menuitem
-    id="payment_banking_batch_processing_menu"
-    name="Banking Batch Payment Processing"
-    parent="account.menu_configuration_misc"
-    action="payment_banking_batch_processing_action"
-    sequence="11" />
+            id="payment_banking_batch_processing_menu"
+            name="Banking Batch Payment Processing"
+            parent="account.menu_configuration_misc"
+            action="payment_banking_batch_processing_action"
+            sequence="11"
+        />
 </data>
 </openerp>
